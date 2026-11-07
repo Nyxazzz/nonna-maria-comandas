@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nonna Maria · Comandas</title>
+<meta name="theme-color" content="#1e4a2c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nonna Maria">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,700&display=swap">
+<style>
+/* Layout: columna única de móvil, cabecera verde con marca amarilla, barra de pestañas fija abajo */
+:root{--bg:#f1f3ea;--card:#fff;--ink:#17261c;--mut:#5d6b60;--pri:#1e4a2c;--pri-ink:#fff;--acc:#e8b923;--acc-ink:#1b2a1e;--warn:#b0412e;--line:#d9dfcd;--chip:#e6ebdb;
+ --display:"Fraunces",Georgia,"Times New Roman",serif;box-sizing:border-box}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a12;--card:#162619;--ink:#eef1e6;--mut:#9cab9f;--pri:#2c6b40;--pri-ink:#fff;--acc:#f0c53a;--acc-ink:#17200f;--warn:#e7836f;--line:#26402d;--chip:#1e3324;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1a12;--card:#162619;--ink:#eef1e6;--mut:#9cab9f;--pri:#2c6b40;--pri-ink:#fff;--acc:#f0c53a;--acc-ink:#17200f;--warn:#e7836f;--line:#26402d;--chip:#1e3324;color-scheme:dark}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--pri);z-index:30}
+.upd{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--pri);color:var(--pri-ink);padding:8px 8px 8px 16px;border-radius:999px;display:flex;align-items:center;gap:10px;z-index:21;box-shadow:0 4px 14px rgba(0,0,0,.25);white-space:nowrap}
+.upd button{background:var(--acc);color:var(--acc-ink);font-weight:800;min-height:36px;padding:6px 14px;border-radius:999px}
+.ver{text-align:center;margin-top:18px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:480px;margin:0 auto;padding:12px 14px 90px}
+h1,h2,h3{margin:0}h2{font-size:18px;margin:14px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.top{display:flex;justify-content:space-between;align-items:center;background:var(--pri);color:var(--pri-ink);border-radius:14px;padding:8px 8px 8px 14px}
+.logo{font-family:var(--display);font-style:italic;font-weight:700;color:var(--acc);font-size:24px;letter-spacing:.2px}
+.top button{background:transparent;color:var(--pri-ink);border:1px solid rgba(255,255,255,.35);min-height:38px;padding:6px 12px}
+.mut{color:var(--mut);font-size:14px}
+button{font:inherit;border:0;border-radius:12px;padding:12px 14px;background:var(--chip);color:var(--ink);cursor:pointer;min-height:44px}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+button.p{background:var(--pri);color:var(--pri-ink);font-weight:700}button.g{background:var(--acc);color:var(--acc-ink);font-weight:800}
+button.on{background:var(--pri);color:var(--pri-ink)}button:disabled{opacity:.4;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+input{font:inherit;width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin:6px 0}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));gap:6px;z-index:5}
+.tabs button{flex:1;background:none;font-size:14px;border-top:3px solid transparent}.tabs button.on{background:var(--pri);color:var(--pri-ink);border-top-color:var(--acc)}
+.tot{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}.sheet{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9;display:flex;align-items:flex-end}
+.sheet>div{background:var(--bg);width:100%;max-height:92%;overflow:auto;border-radius:18px 18px 0 0;padding:14px;max-width:480px;margin:0 auto}
+.line{padding:8px 0;border-bottom:1px dashed var(--line)}.line:last-child{border:0}
+details{margin:6px 0}summary{cursor:pointer;padding:8px 0;font-weight:600}
+.err{color:var(--warn);font-size:14px;min-height:18px}
+.toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--acc);color:var(--acc-ink);font-weight:700;padding:10px 18px;border-radius:20px;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.q{display:flex;align-items:center;gap:10px}.q button{width:44px;padding:0}
+/* Cobro en efectivo */
+.cash{border-top:1px solid var(--line);margin-top:4px;padding-top:10px}
+.cash .chips button{flex:1;min-width:70px;font-variant-numeric:tabular-nums}
+.change{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--pri);color:var(--pri-ink)}
+.change b{font-size:28px;color:var(--acc);font-variant-numeric:tabular-nums}
+.change.short{background:transparent;color:var(--warn);border:1px solid var(--warn)}.change.short b{color:var(--warn)}
+.change.idle{background:var(--chip);color:var(--mut)}.change.idle b{color:var(--mut);font-size:20px}
+/* Portada */
+.splash{position:fixed;inset:0;background:var(--pri);color:var(--pri-ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));text-align:center}
+.splash h1{font-family:var(--display);font-style:italic;font-weight:700;font-size:clamp(48px,15vw,76px);line-height:1;color:var(--acc)}
+.splash .rule{width:64px;height:3px;background:var(--acc);border-radius:2px}
+.splash p{margin:0;opacity:.8;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
+.splash button{background:var(--acc);color:var(--acc-ink);font-weight:800;font-size:18px;padding:14px 48px;border-radius:999px;margin-top:10px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const APP_VERSION='1.0.0';
+const PASTAS=['Penne','Tagliatella','Gnocchi'];
+const SALSAS={'Boloñesa':6,'Pomodoro Albahaca':6,'Queso':6,'Pesto':7,'Trufa':7,'Carbonara':7};
+const EXTRAS={'Queso':.5,'Cebolla frita':.5,'Picante':.5,'Albóndigas':1,'Mozzarella':1};
+const BEB={'Agua':1,'Refresco':1.5};
+const KEY='pasta_proto_v1';
+let DB={shifts:[]};try{DB=JSON.parse(localStorage.getItem(KEY))||DB}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}};
+let inside=false,tab='c',draft=[],pay=null,given=null,B=null,msg='';
+const r2=n=>Math.round(n*100)/100;
+const eur=n=>n.toLocaleString('es-ES',{style:'currency',currency:'EUR'});
+const cur=()=>DB.shifts.find(s=>!s.closedAt);
+const lp=l=>l.t==='p'?(SALSAS[l.salsa]+l.extras.reduce((a,x)=>a+EXTRAS[x],0))*l.q:BEB[l.name]*l.q;
+const ld=l=>l.t==='p'?`${l.q}× ${l.pasta} ${l.salsa}`+(l.extras.length?` + ${l.extras.join(', ')}`:''):`${l.q}× ${l.name}`;
+const sum=a=>r2(a.reduce((x,l)=>x+lp(l),0));
+const ot=o=>sum(o.lines);
+const fd=d=>new Date(d+'T12:00').toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+const hm=t=>new Date(t).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+
+function totals(s){const r={efectivo:{n:0,t:0,o:[]},tarjeta:{n:0,t:0,o:[]}};
+ s.orders.forEach(o=>{const x=r[o.pay];x.n++;x.t+=ot(o);x.o.push(o)});return r}
+
+function ordHTML(o){const t=ot(o);
+ return `<div class="line"><div class="row"><b>#${o.n} · ${hm(o.t)}</b><b>${eur(t)}</b></div>`+o.lines.map(l=>`<div class="mut">${ld(l)}</div>`).join('')+
+ (o.given!=null?`<div class="mut">Entregado ${eur(o.given)} · cambio ${eur(r2(o.given-t))}</div>`:'')+'</div>'}
+
+function viewSplash(){return `<div class="splash"><h1>Nonna Maria</h1><div class="rule"></div><p>Comandas</p><button data-a="enter">Entrar</button></div>`}
+
+/* Billetes y redondeos más probables para el total: justo, siguiente euro, siguiente 5, 10, 20, 50 */
+function quick(t){if(t<=0)return[];const c=[t,Math.ceil(t),Math.ceil(t/5)*5,Math.ceil(t/10)*10,20,50,100].filter(x=>x>=t);
+ return [...new Set(c.map(r2))].sort((a,b)=>a-b).slice(0,5)}
+
+function changeHTML(t){
+ if(given==null)return `<div class="change idle" id="chg"><span>A devolver</span><b>—</b></div>`;
+ const d=r2(given-t);
+ if(d<0)return `<div class="change short" id="chg"><span>Faltan</span><b>${eur(-d)}</b></div>`;
+ return `<div class="change" id="chg"><span>A devolver</span><b>${eur(d)}</b></div>`}
+const canAccept=t=>draft.length&&pay&&!(pay==='efectivo'&&given!=null&&given<t);
+
+function viewComanda(){const s=cur();
+ if(!s)return `<div class="card"><h3>No hay turno abierto</h3><p class="mut">Abre el turno para empezar a anotar comandas.</p><button class="p" data-a="tab" data-v="t">Ir a Turno</button></div>`;
+ const t=sum(draft);
+ const cash=pay==='efectivo'&&draft.length?`<div class="cash"><b>¿Cuánto entrega el cliente?</b>
+ <div class="chips" style="margin-top:8px">${quick(t).map(x=>`<button class="${given===x?'on':''}" data-a="given" data-v="${x}">${x===t?'Justo':eur(x)}</button>`).join('')}</div>
+ <input id="given" inputmode="decimal" placeholder="Otro importe" value="${given!=null&&!quick(t).includes(given)?String(given).replace('.',','):''}">
+ ${changeHTML(t)}</div>`:'';
+ return `<h2>Comanda #${s.orders.length+1}</h2><div class="card">`+
+ (draft.length?draft.map(l=>`<div class="line"><div class="row"><span>${ld(l)}</span><b>${eur(lp(l))}</b></div><div class="row" style="margin-top:6px"><div class="q"><button data-a="lq" data-v="${l.id}:-1">−</button><b>${l.q}</b><button data-a="lq" data-v="${l.id}:1">+</button></div><div class="chips">${l.t==='p'?`<button data-a="edit" data-v="${l.id}">Editar</button>`:''}<button data-a="del" data-v="${l.id}">Quitar</button></div></div></div>`).join(''):'<p class="mut">Comanda vacía. Añade un plato o una bebida.</p>')+`</div>
+ <button class="p" style="width:100%;margin-bottom:10px" data-a="newp">+ Añadir plato</button>
+ <div class="card"><b>Bebidas</b><div class="chips" style="margin-top:8px">${Object.keys(BEB).map(b=>`<button data-a="drink" data-v="${b}">${b} · ${eur(BEB[b])}</button>`).join('')}</div></div>
+ <div class="card"><div class="row"><span>Total</span><span class="tot">${eur(t)}</span></div>
+ <div class="chips" style="margin:10px 0"><button class="${pay==='efectivo'?'on':''}" data-a="pay" data-v="efectivo">💶 Efectivo</button><button class="${pay==='tarjeta'?'on':''}" data-a="pay" data-v="tarjeta">💳 Tarjeta</button></div>
+ ${cash}
+ <button class="g" id="acc" style="width:100%;margin-top:10px" data-a="accept" ${canAccept(t)?'':'disabled'}>Aceptar operación</button>
+ ${draft.length?'<button style="width:100%;margin-top:8px" data-a="clear">Vaciar comanda</button>':''}</div>`}
+
+function viewBuilder(){const p=B.pasta&&B.salsa?(SALSAS[B.salsa]+B.extras.reduce((a,x)=>a+EXTRAS[x],0))*B.q:0;
+ return `<div class="sheet"><div><h3 style="margin-bottom:8px">${B.id?'Editar plato':'Nuevo plato'}</h3>
+ <b>Pasta</b><div class="chips" style="margin:6px 0 12px">${PASTAS.map(x=>`<button class="${B.pasta===x?'on':''}" data-a="bp" data-v="${x}">${x}</button>`).join('')}</div>
+ <b>Salsa</b><div class="chips" style="margin:6px 0 12px">${Object.keys(SALSAS).map(x=>`<button class="${B.salsa===x?'on':''}" data-a="bs" data-v="${x}">${x} · ${eur(SALSAS[x])}</button>`).join('')}</div>
+ <b>Extras</b><div class="chips" style="margin:6px 0 12px">${Object.keys(EXTRAS).map(x=>`<button class="${B.extras.includes(x)?'on':''}" data-a="bx" data-v="${x}">${x} · +${eur(EXTRAS[x])}</button>`).join('')}</div>
+ <div class="row"><div class="q"><button data-a="bq" data-v="-1">−</button><b>${B.q}</b><button data-a="bq" data-v="1">+</button></div><b class="tot">${eur(p)}</b></div>
+ <div class="row" style="margin-top:12px"><button style="flex:1" data-a="bcancel">Cancelar</button><button class="p" style="flex:2" data-a="bsave" ${B.pasta&&B.salsa?'':'disabled'}>${B.id?'Guardar':'Añadir'}</button></div></div></div>`}
+
+function shiftCard(s){const T=totals(s),all=T.efectivo.t+T.tarjeta.t,n=s.orders.length;
+ const sec=(k,l)=>`<details><summary>${l} · ${eur(T[k].t)} (${T[k].n})</summary>${T[k].o.length?T[k].o.map(ordHTML).join(''):'<div class="mut">Sin comandas</div>'}</details>`;
+ return `<details class="card"><summary><div class="row"><span style="text-transform:capitalize">${fd(s.date)}${s.closedAt?'':' 🟢'}</span><b>${eur(all)}</b></div><div class="mut" style="font-weight:400">${n} comandas · ${hm(s.openedAt)}${s.closedAt?'–'+hm(s.closedAt):' (abierto)'}</div></summary>${sec('efectivo','💶 Efectivo')}${sec('tarjeta','💳 Tarjeta')}</details>`}
+
+function viewResumen(){const S=[...DB.shifts].reverse();
+ return `<h2>Resumen</h2>`+(S.length?S.map(shiftCard).join(''):'<p class="mut">Aún no hay turnos registrados.</p>')}
+
+function viewTurno(){const s=cur();
+ if(!s)return `<h2>Turno</h2><div class="card"><p>No hay ningún turno abierto.</p><button class="g" style="width:100%" data-a="open">Abrir turno</button></div>`;
+ const T=totals(s);
+ return `<h2>Turno abierto</h2><div class="card"><p class="mut">Abierto a las ${hm(s.openedAt)}</p>
+ <div class="row"><span>💶 Efectivo (${T.efectivo.n})</span><b>${eur(T.efectivo.t)}</b></div><div class="row"><span>💳 Tarjeta (${T.tarjeta.n})</span><b>${eur(T.tarjeta.t)}</b></div><hr style="border-color:var(--line)"><div class="row"><span>Total</span><span class="tot">${eur(T.efectivo.t+T.tarjeta.t)}</span></div></div>
+ ${draft.length?'<p class="err">Hay una comanda sin terminar. Acéptala o vacíala antes de cerrar.</p>':''}
+ <button class="p" style="width:100%" data-a="close" ${draft.length?'disabled':''}>${window._cc?'Pulsa de nuevo para confirmar el cierre':'Cerrar turno'}</button>
+ <p class="mut ver">Versión ${APP_VERSION}</p>`}
+
+function render(){const a=document.getElementById('app');
+ if(!inside){a.innerHTML=viewSplash();return}
+ const V={c:viewComanda,r:viewResumen,t:viewTurno}[tab]();
+ a.innerHTML=`<div class="top"><div class="logo">Nonna Maria</div><button data-a="logout">Salir</button></div>${V}
+ <div class="tabs">${[['c','🧾 Comanda'],['r','📊 Resumen'],['t','⏱ Turno']].map(([k,l])=>`<button class="${tab===k?'on':''}" data-a="tab" data-v="${k}">${l}</button>`).join('')}</div>${B?viewBuilder():''}${msg?`<div class="toast">${msg}</div>`:''}${updReady?'<div class="upd">Nueva versión lista<button data-a="reload">Actualizar</button></div>':''}`}
+
+const uid=()=>Math.random().toString(36).slice(2,8);
+function act(a,v){
+ if(a!=='close')window._cc=false;
+ if(a==='reload'){location.reload();return}
+ if(a==='enter'){inside=true;tab='c'}
+ else if(a==='logout'){inside=false;draft=[];pay=null;given=null;B=null}
+ else if(a==='tab'){tab=v}
+ else if(a==='newp')B={id:null,pasta:null,salsa:null,extras:[],q:1};
+ else if(a==='edit'){const l=draft.find(x=>x.id===v);B={id:l.id,pasta:l.pasta,salsa:l.salsa,extras:[...l.extras],q:l.q}}
+ else if(a==='bp')B.pasta=v;else if(a==='bs')B.salsa=v;
+ else if(a==='bx')B.extras=B.extras.includes(v)?B.extras.filter(x=>x!==v):[...B.extras,v];
+ else if(a==='bq')B.q=Math.max(1,B.q+ +v);
+ else if(a==='bcancel')B=null;
+ else if(a==='bsave'){const l={id:B.id||uid(),t:'p',pasta:B.pasta,salsa:B.salsa,extras:B.extras,q:B.q};
+  draft=B.id?draft.map(x=>x.id===B.id?l:x):[...draft,l];B=null}
+ else if(a==='drink'){const l=draft.find(x=>x.t==='b'&&x.name===v);l?l.q++:draft.push({id:uid(),t:'b',name:v,q:1})}
+ else if(a==='lq'){const[i,d]=v.split(':');const l=draft.find(x=>x.id===i);l.q+=+d;if(l.q<1)draft=draft.filter(x=>x.id!==i)}
+ else if(a==='del')draft=draft.filter(x=>x.id!==v);
+ else if(a==='pay'){pay=v;given=null}
+ else if(a==='given'){given=+v}
+ else if(a==='clear'){draft=[];pay=null;given=null}
+ else if(a==='accept'){const s=cur(),t=sum(draft);if(!canAccept(t))return;
+  const o={n:s.orders.length+1,t:Date.now(),pay,lines:draft};if(pay==='efectivo'&&given!=null)o.given=given;
+  s.orders.push(o);save();
+  toast(o.given!=null?`Registrada ✓ · Devolver ${eur(r2(o.given-t))}`:'Operación registrada ✓',o.given!=null?3500:1600);
+  draft=[];pay=null;given=null}
+ else if(a==='open'){DB.shifts.push({id:uid(),date:today(),openedAt:Date.now(),closedAt:null,orders:[]});save();tab='c'}
+ else if(a==='close'){if(!window._cc){window._cc=true}else{cur().closedAt=Date.now();window._cc=false;save();tab='r'}}
+ render()}
+let tt;function toast(t,ms){msg=t;clearTimeout(tt);tt=setTimeout(()=>{msg='';render()},ms)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&!b.disabled)act(b.dataset.a,b.dataset.v)});
+/* Importe escrito a mano: actualiza el cambio sin redibujar, para no perder el foco del teclado */
+document.addEventListener('input',e=>{if(e.target.id!=='given')return;
+ const n=parseFloat(e.target.value.replace(',','.'));given=isNaN(n)?null:r2(n);const t=sum(draft);
+ document.getElementById('chg').outerHTML=changeHTML(t);
+ document.querySelectorAll('[data-a="given"]').forEach(b=>b.classList.remove('on'));
+ document.getElementById('acc').disabled=!canAccept(t)});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!inside)act('enter')});
+/* Actualizaciones: el service worker baja la versión nueva al abrir o volver a la app.
+   Si no hay ninguna comanda a medias se recarga sola; si la hay, se ofrece el botón Actualizar. */
+let updReady=false;
+if('serviceWorker' in navigator&&location.protocol!=='file:'){
+ const had=!!navigator.serviceWorker.controller;
+ navigator.serviceWorker.register('sw.js').then(reg=>{
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')reg.update().catch(()=>{})});
+  setInterval(()=>reg.update().catch(()=>{}),30*60*1000);
+ }).catch(()=>{});
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{
+  if(!had)return;
+  if(!draft.length&&!B)location.reload();else{updReady=true;render()}
+ });
+}
+render();
+</script>
+</body>
+</html>
